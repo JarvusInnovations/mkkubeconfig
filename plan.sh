@@ -20,9 +20,13 @@ pkg_bin_dirs=(bin)
 # implement git-based dynamic version strings
 pkg_version() {
   if [ -n "${pkg_last_tag}" ]; then
-    echo "${pkg_last_version}-git+${pkg_last_tag_distance}.${pkg_commit}"
+    if [ ${pkg_last_tag_distance} -eq 0 ]; then
+      echo "${pkg_last_version}"
+    else
+      echo "${pkg_last_version}-git+${pkg_last_tag_distance}.${pkg_commit}"
+    fi
   else
-    echo "${pkg_last_version}-git+${pkg_commit}"
+    echo "${pkg_last_version}-git.${pkg_commit}"
   fi
 }
 
